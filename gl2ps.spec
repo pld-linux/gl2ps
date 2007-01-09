@@ -1,12 +1,12 @@
 Summary:	GL2PS - an OpenGL to PostScript printing library
 Summary(pl):	GL2PS - biblioteka drukowania z OpenGL-a do PostScriptu
 Name:		gl2ps
-Version:	1.2.6
+Version:	1.3.2
 Release:	1
 License:	LGPL v2+ or GP2PS License v2+ (see COPYING.GL2PS)
 Group:		Libraries
 Source0:	http://www.geuz.org/gl2ps/src/%{name}-%{version}.tgz
-# Source0-md5:	0fe27cf84d8bc4691982d8d5c6b2496f
+# Source0-md5:	15cf4a6a790c109fc03c6601660d73a7
 URL:		http://www.geuz.org/gl2ps/
 BuildRequires:	OpenGL-devel
 BuildRequires:	libtool
