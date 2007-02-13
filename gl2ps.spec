@@ -1,5 +1,5 @@
 Summary:	GL2PS - an OpenGL to PostScript printing library
-Summary(pl.UTF-8):   GL2PS - biblioteka drukowania z OpenGL-a do PostScriptu
+Summary(pl.UTF-8):	GL2PS - biblioteka drukowania z OpenGL-a do PostScriptu
 Name:		gl2ps
 Version:	1.3.2
 Release:	1
@@ -48,7 +48,7 @@ wektorowych, takich jak xfig, cgm, wmf itp.
 
 %package devel
 Summary:	Header files for GL2PS library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki GL2PS
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki GL2PS
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	OpenGL-devel
@@ -61,7 +61,7 @@ Pliki nagłówkowe biblioteki GL2PS.
 
 %package static
 Summary:	Static GL2PS library
-Summary(pl.UTF-8):   Statyczna biblioteka GL2PS
+Summary(pl.UTF-8):	Statyczna biblioteka GL2PS
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
