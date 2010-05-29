@@ -9,7 +9,7 @@ Source0:	http://www.geuz.org/gl2ps/src/%{name}-%{version}.tgz
 # Source0-md5:	22e51ff57ecd35cb1cc22497a178a017
 URL:		http://www.geuz.org/gl2ps/
 BuildRequires:	OpenGL-devel
-BuildRequires:	libtool
+BuildRequires:	cmake
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -77,15 +77,21 @@ Statyczna biblioteka GL2PS.
 %setup -q -n %{name}-%{version}-source
 
 %build
-libtool --mode=compile --tag=CC %{__cc} %{rpmcflags} -c -o gl2ps.lo gl2ps.c
-libtool --mode=link --tag=CC %{__cc} %{rpmldflags} -o libgl2ps.la gl2ps.lo -rpath %{_libdir} -lGL -lm
+export CFLAGS="%{rpmcflags}"
+export CXXFLAGS="%{rpmcflags}"
+%{__cmake} . \
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
 
-libtool --mode=install install libgl2ps.la $RPM_BUILD_ROOT%{_libdir}
-install gl2ps.h $RPM_BUILD_ROOT%{_includedir}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+mv $RPM_BUILD_ROOT%{_libdir}/libgl2ps.so{,.0.0.0}
+ln -s libgl2ps.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/libgl2ps.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -102,7 +108,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc gl2ps.pdf
 %attr(755,root,root) %{_libdir}/libgl2ps.so
-%{_libdir}/libgl2ps.la
 %{_includedir}/gl2ps.h
 
 %files static
