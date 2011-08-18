@@ -1,16 +1,18 @@
 Summary:	GL2PS - an OpenGL to PostScript printing library
 Summary(pl.UTF-8):	GL2PS - biblioteka drukowania z OpenGL-a do PostScriptu
 Name:		gl2ps
-Version:	1.3.5
-Release:	4
+Version:	1.3.6
+Release:	1
 License:	LGPL v2+ or GP2PS License v2+ (see COPYING.GL2PS)
 Group:		Libraries
 Source0:	http://www.geuz.org/gl2ps/src/%{name}-%{version}.tgz
-# Source0-md5:	22e51ff57ecd35cb1cc22497a178a017
+# Source0-md5:	41eb8f4a143ef83de2fd8cd3423acf7a
+Patch0:		%{name}-link.patch
 URL:		http://www.geuz.org/gl2ps/
 BuildRequires:	OpenGL-devel
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.4
 BuildRequires:	libpng-devel
+BuildRequires:	rpmbuild(macros) >= 1.603
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -75,12 +77,11 @@ Statyczna biblioteka GL2PS.
 
 %prep
 %setup -q -n %{name}-%{version}-source
+%patch0 -p1
 
 %build
-export CFLAGS="%{rpmcflags}"
-export CXXFLAGS="%{rpmcflags}"
-%{__cmake} . \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}"
+%cmake .
+
 %{__make}
 
 %install
@@ -89,10 +90,6 @@ install -d $RPM_BUILD_ROOT%{_libdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-mv $RPM_BUILD_ROOT{%{_prefix}/lib/libgl2ps.so,%{_libdir}/libgl2ps.so.0.0.0}
-ln -s libgl2ps.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/libgl2ps.so
-[ -f $RPM_BUILD_ROOT%{_libdir}/libgl2ps.a ] || mv $RPM_BUILD_ROOT{%{_prefix}/lib,%{_libdir}}/libgl2ps.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -104,6 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING.GL2PS README.txt TODO.txt
 %attr(755,root,root) %{_libdir}/libgl2ps.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgl2ps.so.1
 
 %files devel
 %defattr(644,root,root,755)
