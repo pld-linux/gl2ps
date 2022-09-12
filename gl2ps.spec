@@ -13,6 +13,8 @@ BuildRequires:	OpenGL-devel
 BuildRequires:	cmake >= 2.8
 BuildRequires:	libpng-devel
 BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	texlive-format-pdflatex
+BuildRequires:	texlive-xetex
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
